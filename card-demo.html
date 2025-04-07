@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>平行四边形边框效果演示</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            flex-direction: column;
+            gap: 30px;
+            padding: 20px;
+        }
+        
+        /* 方式1：使用clip-path创建平行四边形 */
+        .card-clip {
+            padding: 20px;
+            background: white;
+            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+            filter: drop-shadow(0px 5px 5px rgb(194, 9, 9));
+        }
+        
+        /* 方式2：使用伪元素+skew实现平行四边形边框，内容不变形 */
+        .card-skew {
+            position: relative;
+            padding: 20px;
+            background: transparent;
+            border: none;
+        }
+        
+        .card-skew::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            border: 2px dashed gray;
+            transform: skew(-10deg);
+            z-index: -1;
+        }
+        
+        /* 方式3：使用渐变边框实现平行四边形效果 */
+        .card-gradient {
+            padding: 20px;
+            background: white;
+            position: relative;
+            box-sizing: border-box;
+        }
+        
+        .card-gradient::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, transparent 15px, gray 15px, gray calc(15px + 2px), transparent calc(15px + 2px + 1px)) top left,
+                        linear-gradient(-135deg, transparent 15px, gray 15px, gray calc(15px + 2px), transparent calc(15px + 2px + 1px)) top right,
+                        linear-gradient(-45deg, transparent 15px, gray 15px, gray calc(15px + 2px), transparent calc(15px + 2px + 1px)) bottom right,
+                        linear-gradient(45deg, transparent 15px, gray 15px, gray calc(15px + 2px), transparent calc(15px + 2px + 1px)) bottom left;
+            background-size: 50% 50%;
+            background-repeat: no-repeat;
+            z-index: -1;
+        }
+        
+        .card-container {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .card-content {
+            text-align: center;
+            width: 100%;
+        }
+        
+        .card h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .card p {
+            color: #666;
+        }
+        
+        .card-blue {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: 2px dashed rgba(255, 255, 255, 0.5);
+        }
+        
+        .card-green {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border: 2px dashed rgba(255, 255, 255, 0.5);
+        }
+        
+        .card-orange {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+            color: white;
+            border: 2px dashed rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <h1>平行四边形边框效果演示</h1>
+    
+    <div class="card-container">
+        <div class="card-clip">
+            <div class="card-content">
+                <h2>方式1：clip-path</h2>
+                <p>使用clip-path属性创建平行四边形</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-container">
+        <div class="card-skew card-blue">
+            <div class="card-content">
+                <h2>方式2：伪元素+skew</h2>
+                <p>使用伪元素和transform:skew实现，内容不变形</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-container">
+        <div class="card-gradient card-green">
+            <div class="card-content">
+                <h2>方式3：渐变边框</h2>
+                <p>使用渐变背景实现平行四边形边框</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-container">
+        <div class="card-clip card-orange">
+            <div class="card-content">
+                <h2>颜色变体</h2>
+                <p>不同颜色的平行四边形效果</p>
+            </div>
+        </div>
+    </div>
+    
+    <div style="margin-top: 30px;">
+        <h3>CSS代码说明：</h3>
+        <pre style="background: #f1f1f1; padding: 15px; border-radius: 5px; overflow-x: auto;">
+/* 方式1：使用clip-path创建平行四边形 */
+.card-clip {
+    padding: 20px;
+    background: white;
+    border: 2px dashed gray;
+    clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+    filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.3));
+}
+
+/* 方式2：使用伪元素+skew实现平行四边形边框，内容不变形 */
+.card-skew {
+    position: relative;
+    padding: 20px;
+    background: transparent;
+    border: none;
+}
+
+.card-skew::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    border: 2px dashed gray;
+    transform: skew(-10deg);
+    z-index: -1;
+}</pre>
+        <p>
+            以上是三种不同实现平行四边形边框的方法：<br><br>
+            <strong>方式1：使用clip-path</strong><br>
+            - 优点：简单直接，容易控制形状<br>
+            - 缺点：在某些旧浏览器可能不支持<br><br>
+            
+            <strong>方式2：使用伪元素+skew</strong><br>
+            - 优点：内容不变形，兼容性好<br>
+            - 缺点：实现略复杂<br><br>
+            
+            <strong>方式3：渐变边框</strong><br>
+            - 优点：可以创建更复杂的边框效果<br>
+            - 缺点：代码较复杂，调整参数需要计算
+        </p>
+    </div>
+</body>
+</html>
